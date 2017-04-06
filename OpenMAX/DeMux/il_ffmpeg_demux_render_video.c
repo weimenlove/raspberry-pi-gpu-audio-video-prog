@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include <OMX_Core.h>
-#include <OMX_Component.h>
+#include <IL/OMX_Core.h>
+#include <IL/OMX_Component.h>
 
 #include <bcm_host.h>
-#include <vcos_logging.h>
+#include <interface/vcos/vcos_logging.h>
 
 #define VCOS_LOG_CATEGORY (&il_ffmpeg_log_category)
 static VCOS_LOG_CAT_T il_ffmpeg_log_category;
@@ -359,14 +359,14 @@ int setup_demuxer(const char *filename) {
 	img_height        = video_stream->codec->height;
 	extradata         = video_stream->codec->extradata;
 	extradatasize     = video_stream->codec->extradata_size;
-	fpsscale          = video_stream->r_frame_rate.den;
-	fpsrate           = video_stream->r_frame_rate.num;
+	fpsscale          = video_stream->avg_frame_rate.den;
+	fpsrate           = video_stream->avg_frame_rate.num;
 	time_base_num         = video_stream->time_base.num;
 	time_base_den         = video_stream->time_base.den;
 
 	printf("Rate %d scale %d time base %d %d\n",
-	       video_stream->r_frame_rate.num,
-	       video_stream->r_frame_rate.den,
+	       video_stream->avg_frame_rate.num,
+	       video_stream->avg_frame_rate.den,
 	       video_stream->time_base.num,
 	       video_stream->time_base.den);
 
